@@ -1,0 +1,70 @@
+---
+import BlogCard from '@/components/BlogCard.astro'
+import Link from '@/components/Link.astro'
+import PageHead from '@/components/PageHead.astro'
+import { buttonVariants } from '@/components/ui/button'
+import { SITE } from '@/consts'
+import Layout from '@/layouts/Layout.astro'
+import { getFeaturedPosts } from '@/lib/data-utils'
+
+const blog = await getFeaturedPosts(SITE.featuredPostCount)
+---
+
+<Layout class="max-w-3xl">
+  <PageHead slot="head" title="Home" />
+  <section>
+
+    <div class="rounded-lg border">
+      <div class="flex flex-col space-y-1.5 p-6">
+        <h3 class="text-3xl leading-none font-medium">re·tard</h3>
+        <p class="text-muted-foreground text-sm">
+          /rəˈtärd/ &bull; <span class="font-medium">noun</span>
+        </p>
+      </div>
+      <div class="p-6 pt-0">
+        <p class="text-muted-foreground mb-4 text-sm">
+          To <span class="font-medium text-foreground">delay</span> or <span class="font-medium text-foreground">impede</span> the development or progress of : to slow up especially by preventing or hindering advance or accomplishment
+        </p>
+        <div class="mb-4 pb-4 border-b">
+          <p class="text-xs uppercase tracking-wide text-muted-foreground mb-1 font-medium"><span class="font-medium text-foreground">Etymology</span></p>
+          <p class="text-sm text-muted-foreground">
+            Middle English, from Anglo-French or Latin; Anglo-French <span class="italic font-medium text-foreground">retarder</span>, 
+            from Latin <span class="italic font-medium text-foreground">retardare</span>, from <span class="italic">re-</span> + 
+            <span class="italic">tardus</span> <span class="font-medium text-foreground">slow</span>
+          </p>
+        </div>
+        <p class="text-muted-foreground text-sm">
+          <span class="font-medium text-foreground">A Wiki for Retards.</span> For Posterity, this site documents <span class="font-medium text-foreground">Profoundly Autistic Adventures</span> as narrated by the members of the <span class="font-medium text-foreground">Retard Security Council</span>.
+          Career inquiries (and general contact): <Link
+            href="mailto:careers@retards.wiki"
+            class="text-foreground font-medium"
+            underline>careers@retards.wiki</Link
+          >.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="flex flex-col gap-y-4">
+    <h2 class="text-2xl font-medium">Featured Posts</h2>
+    <ul class="flex flex-col gap-y-4">
+      {
+        blog.map((post) => (
+          <li>
+            <BlogCard entry={post} />
+          </li>
+        ))
+      }
+    </ul>
+    <div class="flex justify-center">
+      <Link
+        href="/blog"
+        class={buttonVariants({ variant: 'ghost' }) + ' group'}
+      >
+        See all posts <span
+          class="ml-1.5 transition-transform group-hover:translate-x-1"
+          >&rarr;</span
+        >
+      </Link>
+    </div>
+  </section>
+</Layout>

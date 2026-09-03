@@ -1,0 +1,24 @@
+---
+import AuthorCardExpanded from '@/components/AuthorCardExpanded'
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  author: CollectionEntry<'authors'>
+}
+
+const { author } = Astro.props
+const { name, avatar, bio, pronouns, quote } = author.data
+const currentPath = Astro.url.pathname
+const isAuthorPage = currentPath === `/authors/${author.id}`
+---
+
+<AuthorCardExpanded
+  client:load
+  name={name}
+  pronouns={pronouns}
+  quote={quote}
+  bio={bio}
+  avatar={avatar}
+  href={`/authors/${author.id}`}
+  isAuthorPage={isAuthorPage}
+/>
